@@ -1,29 +1,28 @@
 const express=require('express');
+const connectDB=require("./config/database")
 const app=express();
-// app.get("/user",(req,res)=>{
-// console.log(req.query);
-// res.send(
-//     {firstname: "Aliya",
-//     lastname: "Aftab"}
-// )
-// })
-
-app.get("/user/:userId/:userPassword",(req,res)=>{
-console.log(req.params);
-res.send(
-    {firstname: "Aliya",
-    lastname: "Aftab"}
-)
+const User=require("./models/user");
+app.post("/signup",async (req, res)=>{
+const user=new User({
+firstName:"Harry",
+lastName:"Potter",
+emailId:"harry234@gmail.com",
+password:"654@harry"
+}); 
+await user.save();
+res.send("User added successfully")
 })
 
-app.use("/hello",(req, res)=>{
-res.send("Hello, Hello, Hello!")
-})
-
-app.use("/",(req, res)=>{
-res.send("Hello from the server!")
-})
-
+connectDB()
+.then(()=>{
+console.log("Database connection established");
 app.listen(3000, () => {
 console.log("Server is successfully listening on port 3000...");
 });
+}
+)
+.catch((err)=>{
+console.log("Database cannot be connected");
+}
+);
+
