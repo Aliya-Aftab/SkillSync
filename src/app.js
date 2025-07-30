@@ -3,16 +3,16 @@ const connectDB=require("./config/database")
 const app=express();
 app.use(express.json());
 const User=require("./models/user");
-app.post("/signup",async (req, res)=>{
-const user=new User({
-firstName:"Harry",
-lastName:"Potter",
-emailId:"harry234@gmail.com",
-password:"654@harry"
-}); 
-await user.save();
-res.send("User added successfully")
-})
+// app.post("/signup",async (req, res)=>{
+// const user=new User({
+// firstName:"Harry",
+// lastName:"Potter",
+// emailId:"harry234@gmail.com",
+// password:"654@harry"
+// }); 
+// await user.save();
+// res.send("User added successfully")
+// })
 
 
 // app.post("/signup",async (req, res)=>{
@@ -69,13 +69,24 @@ res.send("User added successfully")
 // })
 
 // update data of the user
-app.patch("/user", async(req,res)=>{
-const userId=req.body.userId;
+app.patch("/user/:userId", async(req,res)=>{
+const userId=req.params?.userId;
 const data=req.body;
 try{
-await User.findByIdAndUpdate({_id:userId},data,{
+const ALLOWED_UPDATES=["photoUrl", "skill", "about"];
+const isUpdateAllowed=Object.keys(data).every((k)=>
+ALLOWED_UPDATES.includes(k)
+);
+if(!isUpdateAllowed){
+throw new Error("Update not allowed");
+}
+if(data?.skills.length>10){
+throw new Error("Skills cannot be more than 10")
+}
+const user=await User.findByIdAndUpdate({_id:userId},data,{
 runValidators: true
 });
+console.log(user);
 res.send("User updated successfully");
 }
 catch(err){
