@@ -1,5 +1,6 @@
 const mongoose=require("mongoose")
 const validator=require("validator")
+const bcrypt=require("bcrypt")
 const userSchema=new mongoose.Schema({
 firstName:{
 type:String,
@@ -59,5 +60,20 @@ type:String,
 default:"This is default about of user"
 }
 }, {timestamps: true});
+
+userSchema.methods.getJWT=async function(){
+const user=this;
+const token=await jwt.sign({_id: this._id}, "skillsync@2025",{expiresIn:"7d"});
+return token;
+};
+
+
+userSchema.methods.validatePassword=async function(passwordInputByUser){
+const user=this;
+const hashPassword=this.password
+const isPasswordValid=await bcrypt.compare(passwordInputByUser, hashPassword);
+return isPasswordValid;
+}
+
 const User=mongoose.model("User",userSchema);
 module.exports=User;

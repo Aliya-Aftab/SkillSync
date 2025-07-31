@@ -40,12 +40,12 @@ const user= await User.findOne({emailId: emailId})
 if(!user){
 throw new Error("Invalid Credentials")
 }
-const isPasswordValid= await bcrypt.compare(password, user.password)
+const isPasswordValid= await user.validatePassword(password)
 if(isPasswordValid){
 // create a jwt token
 
-const token=await jwt.sign({_id:user._id},"skillsync@2025",{expiresIn:"7d"});
-console.log(token);
+const token=await user.getJWT();
+
 // add the token to cookie and send back the response to user
 res.cookie("token", token,{httpOnly: true, expires: new Date(Date.now()+ 2*3600000) })
 
