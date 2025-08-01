@@ -18,6 +18,7 @@ firstName,
 lastName,
 emailId,
 password: passwordHash,
+photoUrl
 });
 await user.save();
 res.send("User added successfully")
