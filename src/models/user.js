@@ -6,6 +6,7 @@ const userSchema=new mongoose.Schema({
 firstName:{
 type:String,
 required:true,
+index: true,
 minLength: 4,
 maxLength: 50
 },
@@ -62,6 +63,8 @@ type:String,
 default:"This is default about of user"
 }
 }, {timestamps: true});
+
+userSchema.index({firstName:1, lastName:1})
 
 userSchema.methods.getJWT=async function(){
 const user=this;
