@@ -12,6 +12,7 @@ app.use(cookieParser())
 const authRouter=require("./routes/auth")
 const profileRouter=require("./routes/profile")
 const requestRouter=require("./routes/request")
+const userRouter=require("./routes/user")
 // app.post("/signup",async (req, res)=>{
 // console.log(req.body)
 // const user=new User(
@@ -90,6 +91,7 @@ const requestRouter=require("./routes/request")
 // res.status(400).send("Something went wrong")
 // }
 // })
+app.use("/", userRouter)
 app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);

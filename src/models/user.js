@@ -50,7 +50,7 @@ photoUrl:{
 type: String,
 validate(value){
 if(!validator.isURL(value)){
-throw new Error("Incoorect URL: "+value)
+throw new Error("Incorrect URL: "+value)
 }
 }
 },
