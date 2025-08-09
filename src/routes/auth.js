@@ -45,7 +45,7 @@ const token=await user.getJWT();
 res.cookie("token", token,{httpOnly: true, expires: new Date(Date.now()+ 2*3600000) })
 
 
-res.send("Login Successful")
+res.send(user)
 }
 else{
 throw new Error("Invalid Credentials")
