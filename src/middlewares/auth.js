@@ -5,7 +5,7 @@ try{
 // read token from req cookies
 const {token}=req.cookies;
 if(!token){
-throw new Error("Invalid Token")
+return res.status(401).send("Please Login!")
 }
 // validate the token
 const decodedObj=await jwt.verify(token,"skillsync@2025")
