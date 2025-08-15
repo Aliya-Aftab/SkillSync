@@ -35,7 +35,8 @@ throw new Error("Your password is not strong")
 }
 },
 age:{
-type:Number
+type:Number,
+min:18
 },
 gender:{
 type: String,

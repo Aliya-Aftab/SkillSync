@@ -3,7 +3,6 @@ const authRouter=express.Router();
 const {validateSignUpData}=require('../utils/validation')
 const User=require("../models/user");
 const bcrypt=require('bcrypt');
-
 authRouter.post("/signup",async (req, res)=>{
 try{
 // Validation of data
