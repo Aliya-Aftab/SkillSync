@@ -66,7 +66,7 @@ default:"This is default about of user"
 }, {timestamps: true});
 
 userSchema.index({firstName:1, lastName:1})
-
+// schema methods 
 userSchema.methods.getJWT=async function(){
 const user=this;
 const token=await jwt.sign({_id: this._id}, "skillsync@2025",{expiresIn:"7d"});
